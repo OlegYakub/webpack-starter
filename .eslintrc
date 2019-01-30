@@ -6,7 +6,12 @@
     "it": false,
     "expect": false,
     "describe": false,
-    "navigator": false
+    "navigator": false,
+    "document": false
+  },
+  "env": {
+    "browser": true,
+    "node": true
   },
   "rules": {
     "react/jsx-filename-extension": ["off"],
@@ -17,6 +22,7 @@
     "react/forbid-prop-types": "off",
     "react/no-multi-comp": "off",
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
     "linebreak-style": ["off"],
     "no-undef": ["error"],
     "no-console": ["off"],

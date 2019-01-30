@@ -1,4 +1,6 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const commonPaths = require('./paths');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
