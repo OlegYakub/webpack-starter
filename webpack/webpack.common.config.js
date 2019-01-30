@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonPaths = require('./paths');
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: commonPaths.outputPath,
-    chunkFilename: '[name].js',
+    chunkFilename: '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -18,12 +19,32 @@ module.exports = {
           {
             loader: 'babel-loader',
           },
+          // {
+          //   loader: 'eslint-loader',
+          //   options: {
+          //     fix: true
+          //   }
+          // }
+        ]
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
           {
-            loader: 'eslint-loader',
+            loader: 'css-loader',
             options: {
-              fix: true
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
             }
-          }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer({browsers: ['> 1%', 'IE >= 10']})],
+            },
+          },
+          'sass-loader'
         ]
       },
       {
@@ -53,9 +74,10 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 2,
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
   ],
-  devServer: {
-    contentBase: commonPaths.outputPath,
-    compress: true,
-  },
+
 };
